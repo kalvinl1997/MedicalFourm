@@ -1,0 +1,63 @@
+﻿@model IEnumerable<MedicalFourm.Models.Comments>
+
+@{
+    ViewBag.Title = "Answer";
+}
+
+
+<div id="result">
+
+    <p>
+        @Html.ActionLink("Answers", null, null, new { @class = "btn btn-primary" })
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                Question
+            </th>
+            <th>
+                Answer
+            </th>
+            <th>
+                Username
+            </th>
+           
+
+            <th>
+                PublishedOn
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                @*<td>@item</td>*@
+                <td>
+
+                    @if (item.Quiz.Qstatment.Length >= 30)
+                    {
+                        <p>  @item.Quiz.Qstatment.Substring(0, Math.Min(item.Quiz.Qstatment.Length, 30))</p>
+                    }
+                    else
+                    {
+                        <p> @item.Quiz.Qstatment</p>
+                    }
+                </td>
+                <td>
+                    <p> @item.CommentText</p>
+                </td>
+                <td>
+                   <p>@item.Usr.username</p>
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommetedOn)
+                </td>
+            </tr>
+        }
+
+    </table>
+
+
+
+</div>

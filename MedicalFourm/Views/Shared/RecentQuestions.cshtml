@@ -1,0 +1,37 @@
+﻿
+@using MedicalFourm.Models;
+ @{ 
+     AppDbContext db = new AppDbContext();
+
+    var lst= db.Questions.OrderByDescending(x => x.Id).ToList().Take(5);
+ }
+
+@foreach (var item in lst)
+{
+
+
+   
+      <div ></div>
+                <h5 style="    background-color: aqua;
+    padding: 10px;">@String.Format("{0:D}", item.PublishedOn)</h5><br />
+               
+                  if (item.Qstatment.Length >= 192)
+                  {
+                    <p>  @item.Qstatment.Substring(0,Math.Min(item.Qstatment.Length,192))</p>
+                  }
+                  else
+                  {
+                    <p> @item.Qstatment</p>
+                  }
+
+                            <br />
+                            <div class="ficon" style="padding-left:10px;">
+                    <a href="~/Questions/Details/@item.Id" alt="" class="btn btn-primary">Read more</a>
+                </div>
+          <hr />
+                <br />
+
+
+}
+
+

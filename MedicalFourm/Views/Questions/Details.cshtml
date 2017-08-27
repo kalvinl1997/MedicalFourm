@@ -1,0 +1,112 @@
+﻿@model MedicalFourm.Models.ViewModels.QuestionVM
+@using MedicalFourm.Models;
+@{
+    ViewBag.Title = "Details";
+}
+
+
+@{
+
+    AppDbContext db = new AppDbContext();
+    var use = db.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
+}
+
+    <div class="blog">
+    <h5>@String.Format("{0:D}", Model.Question.PublishedOn) </h5>
+
+        <h3></h3>
+    <h3>@Model.Question.Qstatment</h3>
+        <h3>@Model.Question.Qdescription</h3>
+
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3 style="float:left;">
+                @if (Model.isuserlike)
+                {   <span style="color:green;"><i class="glyphicon glyphicon-thumbs-up"></i></span>  }
+                else
+                {
+                    <a href="~/Questions/AddLike/@Model.Question.Id"><span><i class="glyphicon glyphicon-thumbs-up"></i></span> </a>
+                }
+                @Model.likes
+            </h3>
+            <h3 style="float:left;">
+                @if (Model.isuserdislike)
+                {   <span  style="color:red;"><i class="glyphicon glyphicon-thumbs-down"></i></span>                    }
+                else
+                {
+                    <a href="~/Questions/AddDislike/@Model.Question.Id"><span ><i class="glyphicon glyphicon-thumbs-down"></i></span> </a>
+                }
+                @Model.dislikes
+                </h3>
+            </div><!-- /col-sm-12 -->
+        </div>
+        <!-- /
+
+
+        <div class="row">
+            <div class="col-md-12">
+                <h5>User Comment Example</h5>
+            </div><!-- /col-sm-12 -->
+        <!-- /row -->
+
+
+        <div id="comments">
+            @if (Model.Comments != null)
+            {
+
+                foreach (var item in Model.Comments)
+                {
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="thumbnail">
+                                <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                            </div><!-- /thumbnail -->
+                        </div><!-- /col-sm-1 -->
+                        <div class="col-md-10">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <strong style="float:left;">@item.Usr.FirstName</strong> <span class="text-muted">Commented On  @String.Format("{0:f}", item.CommetedOn)</span>
+                                    @if (Request.IsAuthenticated)
+                                    {
+                                       
+
+                                        if (use.Id == item.UserId || item.QuestionId == db.Questions.FirstOrDefault(x => x.UserId == use.Id).Id)
+                                        {
+                                            <a href="~/Questions/DeleteComments/?id=@item.Id&qid=@item.QuestionId" data-ajax="#comments" class="btn btn-danger">Delete</a>
+                                        }
+                                    }
+                                </div>
+                                <div class="panel-body">
+                                    @item.CommentText
+                                </div><!-- /panel-body -->
+                            </div><!-- /panel panel-default -->
+                        </div><!-- /col-sm-5 -->
+                    </div>
+
+                }
+
+            }
+            else
+            {
+                <p>No Comments Yet</p>
+            }
+        </div>
+
+        <hr />
+
+        <h3>Add a Comment</h3>
+        <form action="/Questions/AddComment" data-ajax="#comments">
+
+
+            <div class="form-group">
+                <input type="text" class="form-control" name="Commenttxt" />
+
+                <input type="hidden" name="id" value="@Model.Question.Id" />
+                <input type="submit" class="btn btn-primary " value="Add Comment" />
+            </div>
+        </form>
+
+    </div>

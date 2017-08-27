@@ -1,0 +1,74 @@
+﻿@model MedicalFourm.Models.Question
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+
+<div class="content">
+    <h2>Post A Question</h2>
+
+
+            @using (Html.BeginForm())
+            {
+                // @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
+
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })\
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            Title
+                        </div>
+                        <div class="col-md-10">
+                            @Html.EditorFor(model => model.Qstatment, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Qstatment, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            Catagory
+                        </div>
+                        <div class="col-md-10">
+                           
+                            <select name="Qcatagory" id="Qcatagory" required="required" class="form-control">
+                                <option value="" disabled selected>--Select Catagory--</option>
+                                <option value="mental">Mental </option>
+                                <option value="health">Health</option>
+                                <option value="cancer">Cancer</option>
+                                <option value="wounds">Wounds</option>
+                                <option value="food">Food</option>
+                                <option value="Fitness">Fitness</option>
+                                </select>
+                            @Html.ValidationMessageFor(model => model.Qcatagory, "", new { @class = "text-danger" })
+
+</div>
+                    </div>
+
+                            <div class="form-group">
+
+                                <div class="col-md-2">
+                                    Descripition
+                                </div>
+                                <div class="col-md-10">
+                                    <textarea cols="20" data-val="true" data-val-required="The Qstatment field is required." class="form-control" placeholder="Please Add Question" id="Qstatment" name="Qdescription" rows="10"></textarea>
+
+                                    @*@Html.TextAreaFor(model => model.Qstatment, new { htmlAttributes = new { @class = "form-control" , cols="100", rows="10", placeholder="Please Add Question" } })*@
+                                    @Html.ValidationMessageFor(model => model.Qdescription, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <div class="col-md-offset-10 col-md-2">
+                                    <input type="submit" value="Post" class="btn btn-default" />
+                                </div>
+                            </div>
+                        </div>
+                        }
+
+
+                    </div>
+

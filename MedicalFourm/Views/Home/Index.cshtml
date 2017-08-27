@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MedicalFourm.Models.Question>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+
+<div class="content">
+ 
+   
+
+    <hr />
+
+
+ 
+
+    
+        @foreach (var item in Model)
+        {
+
+            <div class="panel panel-primary">
+                <div class="panel-heading ">
+                    <div>@String.Format("{0:D}", item.PublishedOn)</div></div>
+                <div class="panel-body">
+                                        @if (item.Qstatment.Length >= 298)
+                                        {
+                                            <a href="~/Questions/Details/@item.Id" alt="">
+                                                <p>  @item.Qstatment.Substring(0, Math.Min(item.Qstatment.Length, 298))</p>
+                                                </a>
+                                                }
+                                                else
+                                                {
+                                                <a href="~/Questions/Details/@item.Id" alt=""><p> @item.Qstatment</p></a>
+
+                                                }
+
+
+</div>
+                <div class="panel-footer"><a href="~/Questions/Details/@item.Id" alt="">Read More</a></div>
+            </div>
+      
+
+        }
+
+
+  
+
+   
+</div>
+

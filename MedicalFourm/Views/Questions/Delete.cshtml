@@ -1,0 +1,49 @@
+﻿@model IEnumerable<MedicalFourm.Models.Question>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<div id="result">
+
+    <p>
+        @Html.ActionLink("Post A Question", "Create", null, new { @class = "btn btn-primary" })
+    </p>
+    <table class="table">
+        <tr>
+
+            <th>
+                Question
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PublishedOn)
+            </th>
+
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Qstatment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PublishedOn)
+                </td>
+
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-success" }) |
+                    @Html.ActionLink("View", "Details", new { id = item.Id }, htmlAttributes: new { @class = "btn btn-primary" }) |
+                    <a href="~/Questions/Delete/@item.Id" class="btn btn-danger" data-ajax="#result">Delete</a>
+                </td>
+            </tr>
+        }
+
+    </table>
+
+
+
+</div>

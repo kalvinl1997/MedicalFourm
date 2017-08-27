@@ -1,0 +1,41 @@
+﻿@model IEnumerable<MedicalFourm.Models.Comments>
+@using MedicalFourm.Models;
+
+
+
+
+@{
+
+    AppDbContext db = new AppDbContext();
+    var use = db.Users.FirstOrDefault(x => x.Email == User.Identity.Name);
+}
+
+    @foreach (var item in Model)
+                    {
+<div class="row">
+    <div class="col-md-2">
+        <div class="thumbnail">
+            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+        </div><!-- /thumbnail -->
+    </div><!-- /col-sm-1 -->
+    <div class="col-md-10">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong style="float:left;">@item.Usr.FirstName</strong> <span class="text-muted">Commented On  @String.Format("{0:f}", item.CommetedOn)</span>
+                @if (Request.IsAuthenticated)
+                {
+
+                    if (use.Id == item.UserId || item.QuestionId == db.Questions.FirstOrDefault(x => x.UserId == use.Id).Id)
+                    {
+                        <a href="~/Questions/DeleteComments/?id=@item.Id&qid=@item.QuestionId" data-ajax="#comments" class="btn btn-danger">Delete</a>
+                    }
+                }
+             </div>
+            <div class="panel-body">
+                @item.CommentText
+            </div><!-- /panel-body -->
+        </div><!-- /panel panel-default -->
+    </div><!-- /col-sm-5 -->
+</div>
+
+                    }
